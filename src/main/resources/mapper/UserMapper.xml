@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <resultMap id="userMap" type="com.example.demo.entity.User">
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <collection property="roles" ofType="com.example.demo.entity.Role">
+            <id column="rid" property="rid"/>
+            <result column="rname" property="rname"/>
+            <collection property="permissions" ofType="com.example.demo.entity.Permission">
+                <id column="pid" property="pid"/>
+                <result column="name" property="name"/>
+                <result column="url" property="url"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findByUsername" parameterType="String" resultMap="userMap">
+          SELECT u.*,r.*,p.*
+          FROM user u
+            INNER JOIN user_role ur ON ur.uid  = u.uid
+            INNER JOIN role r ON r.rid=  ur.rid
+            INNER JOIN permission_role pr ON pr.rid = r.rid
+            INNER JOIN permission p ON pr.pid = p.pid
+          WHERE u.username = #{username}
+        </select>
+</mapper>
+
+        <!--//用户表-&ndash;&gt;用户角色表-&ndash;&gt;角色表-&ndash;&gt;角色权限表-&ndash;&gt;权限表-->

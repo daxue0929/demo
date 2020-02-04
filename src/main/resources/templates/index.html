@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+<body>
+
+<h1 >欢迎登录：   [[${session.user.username}]]</h1>
+
+<a th:href="@{/admin}">Admin Page</a><br/><br/>
+
+<a th:href="@{/edit}">Edit Page</a><br/><br/>
+
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>
